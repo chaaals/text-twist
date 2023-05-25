@@ -1,0 +1,25 @@
+#words {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+
+#input-boxes {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.input-box {
+  width: 40px;
+  aspect-ratio: 1;
+
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.solved {
+  font-weight: bold;
+  color: green;
+}
