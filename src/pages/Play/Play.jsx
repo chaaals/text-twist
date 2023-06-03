@@ -28,6 +28,8 @@ const Play = () => {
   }, [levelData]);
 
   const onChoiceSelect = (index) => {
+    if (solvedWords.length === words.length) return;
+
     setInputBoxes((prev) => {
       const slotIndex = prev.findIndex((el) => !el);
       let prevCopy = [...prev];
@@ -60,6 +62,8 @@ const Play = () => {
   };
 
   const onUserEnter = () => {
+    if (solvedWords.length === words.length) return;
+
     if (words && words.includes(inputBoxes.join(""))) {
       setSolvedWords((prev) => [...prev, inputBoxes.join("")]);
     } else {
@@ -82,7 +86,10 @@ const Play = () => {
     return <h1>Loading...</h1>;
   }
 
-  console.log({ inputBoxes, choices, solvedWords });
+  const onTwist = () => {
+    setChoices(shuffleArray(choices));
+  };
+
   return (
     <main>
       <h1>Current Level: {currentLevel}</h1>
@@ -120,10 +127,9 @@ const Play = () => {
       </section>
 
       <section id="cta-buttons">
-        {/* <button>Twist</button> // to be implemented later */}
+        <button onClick={onTwist}>Twist</button>
         <button onClick={onClear}>Clear</button>
         <button onClick={onUserEnter}>Enter</button>
-
         {solvedWords.length === words.length && (
           <button onClick={onProceed}>Proceed</button>
         )}
@@ -133,3 +139,14 @@ const Play = () => {
 };
 
 export default Play;
+
+function shuffleArray(array) {
+  let copy = [...array];
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = copy[i];
+    copy[i] = copy[j];
+    copy[j] = temp;
+  }
+  return copy;
+}
