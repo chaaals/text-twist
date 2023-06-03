@@ -74,6 +74,7 @@ const Play = () => {
 	const onUserEnter = () => {
 		var input = inputBoxes.join('');
 
+		const input = inputBoxes.join('');
 		if (solvedWords.length === words.length) return;
 
 		if (solvedWords.includes(input)) {
@@ -93,8 +94,6 @@ const Play = () => {
 	};
 
 	const onProceed = () => {
-		if (currentLevel === 2) return; // temporary, remove this when level 3 - 5 has data
-
 		setSolvedWords([]);
 		setCurrentLevel((prev) => prev + 1);
 		setLevelData(null);
