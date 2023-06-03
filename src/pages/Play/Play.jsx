@@ -62,9 +62,12 @@ const Play = () => {
   };
 
   const onUserEnter = () => {
+    const input = inputBoxes.join("");
     if (solvedWords.length === words.length) return;
 
-    if (words && words.includes(inputBoxes.join(""))) {
+    if (solvedWords.includes(input)) return; //
+
+    if (words && words.includes(input)) {
       setSolvedWords((prev) => [...prev, inputBoxes.join("")]);
     } else {
       console.log("ngek");
@@ -74,8 +77,6 @@ const Play = () => {
   };
 
   const onProceed = () => {
-    if (currentLevel === 2) return; // temporary, remove this when level 3 - 5 has data
-
     setSolvedWords([]);
     setCurrentLevel((prev) => prev + 1);
     setLevelData(null);
