@@ -117,74 +117,87 @@ const Play = () => {
   };
 
   return (
-    <main>
-      <h1>Current Level: {currentLevel}</h1>
-      <p>{points}</p>
-      <p>{time}</p>
+    <main className="play-page">
+      <section className="play-wrapper">
+        <section id="side-pannel">
+          <h1 className="play-heading">Current Level: {currentLevel}</h1>
+          <p className="play-score">Score: {points}</p>
+          <p className="play-time">Time: {parseTime(time)}</p>
+        </section>
 
-      <section id="words">
-        {words.map((word) => (
-          <Word key={word} word={word} solved={solvedWords.includes(word)} />
-        ))}
-      </section>
+        <section id="words">
+          {words.map((word) => (
+            <Word key={word} word={word} solved={solvedWords.includes(word)} />
+          ))}
+        </section>
 
-      <section id="input-boxes">
-        {inputBoxes.map((input, index) => (
-          <div
-            key={`${input}-${index}`}
-            className={`input-box ${input ? "fill" : ""}`}
-            onClick={() => onInputSelect(index)}
-          >{`${input ?? ""}`}</div>
-        ))}
-      </section>
+        <section id="input-boxes">
+          {inputBoxes.map((input, index) => (
+            <div
+              key={`${input}-${index}`}
+              className={`input-box ${input ? "fill" : ""}`}
+              onClick={() => onInputSelect(index)}
+            >{`${input ?? ""}`}</div>
+          ))}
+        </section>
 
-      <section id="input-choices">
-        {choices.map((letter, index) => (
+        <section id="input-choices">
+          {choices.map((letter, index) => (
+            <button
+              className={`choice-box ${letter ? "fill" : ""}`}
+              key={`${letter}-${index}`}
+              onClick={() => onChoiceSelect(index)}
+              disabled={solvedWords.length === words.length}
+            >
+              {letter}
+            </button>
+          ))}
+        </section>
+
+        <section id="cta-buttons">
           <button
-            className={`choice-box ${letter ? "fill" : ""}`}
-            key={`${letter}-${index}`}
-            onClick={() => onChoiceSelect(index)}
+            className="cta-button generic"
+            onClick={onTwist}
             disabled={solvedWords.length === words.length}
           >
-            {letter}
+            Twist
           </button>
-        ))}
-      </section>
+          <button
+            className="cta-button generic"
+            onClick={onClear}
+            disabled={solvedWords.length === words.length}
+          >
+            Clear
+          </button>
+          <button
+            className="cta-button generic"
+            onClick={onUserEnter}
+            disabled={solvedWords.length === words.length}
+          >
+            Enter
+          </button>
+        </section>
 
-      <section id="cta-buttons">
-        <button
-          className="cta-button generic"
-          onClick={onTwist}
-          disabled={solvedWords.length === words.length}
-        >
-          Twist
-        </button>
-        <button
-          className="cta-button generic"
-          onClick={onClear}
-          disabled={solvedWords.length === words.length}
-        >
-          Clear
-        </button>
-        <button
-          className="cta-button generic"
-          onClick={onUserEnter}
-          disabled={solvedWords.length === words.length}
-        >
-          Enter
-        </button>
+        {solvedWords.length === words.length && (
+          <button className="cta-button proceed" onClick={onProceed}>
+            Proceed
+          </button>
+        )}
       </section>
-
-      {solvedWords.length === words.length && (
-        <button className="cta-button proceed" onClick={onProceed}>
-          Proceed
-        </button>
-      )}
     </main>
   );
 };
 
 export default Play;
+
+function parseTime(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+
+  return `${minutes < 10 ? `0${minutes}` : minutes} : ${
+    seconds < 10 ? `0${seconds}` : seconds
+  }`;
+}
 
 function shuffleArray(array) {
   let copy = [...array];

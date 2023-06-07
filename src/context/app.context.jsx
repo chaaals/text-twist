@@ -8,7 +8,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [currentLevel, setCurrentLevel] = useState(1);
   const [levelData, setLevelData] = useState(null);
-  const [time, setTime] = useState(3);
+  const [time, setTime] = useState(600);
   const [timer, setTimer] = useState(undefined);
 
   const getLevelData = async (currentLevel = 1) => {
@@ -16,18 +16,19 @@ export const AppProvider = ({ children }) => {
     const data = await getDocs(levelCollectionRef);
     const index = Math.floor(Math.random() * data.docs.length);
 
-    console.log({ currentLevel });
     setLevelData(
       data.docs
         .filter((_, i) => i === index)
         .map((doc) => ({ ...doc.data(), id: doc.id }))
     );
 
-    setTimer(
-      setInterval(() => {
-        setTime((prev) => prev - 1);
-      }, 1000)
-    );
+    if (!timer) {
+      setTimer(
+        setInterval(() => {
+          setTime((prev) => prev - 1);
+        }, 1000)
+      );
+    }
   };
 
   useEffect(() => {
