@@ -120,9 +120,9 @@ const Play = () => {
     <main className="play-page">
       <section className="play-wrapper">
         <section id="side-pannel">
-          <h1 className="play-heading">Current Level: {currentLevel}</h1>
-          <p className="play-score">Score: {points}</p>
-          <p className="play-time">Time: {parseTime(time)}</p>
+          <h1 className="play-heading">CURRENT LEVEL: {currentLevel}</h1>
+          <p className="play-score">SCORE: {points}</p>
+          <p className="play-time">TIME: {parseTime(time)}</p>
         </section>
 
         <section id="words">
@@ -160,21 +160,21 @@ const Play = () => {
             onClick={onTwist}
             disabled={solvedWords.length === words.length}
           >
-            Twist
+            TWIST
           </button>
           <button
             className="cta-button generic"
             onClick={onClear}
             disabled={solvedWords.length === words.length}
           >
-            Clear
+            CLEAR
           </button>
           <button
             className="cta-button generic"
             onClick={onUserEnter}
             disabled={solvedWords.length === words.length}
           >
-            Enter
+            ENTER
           </button>
         </section>
 

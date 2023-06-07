@@ -45,7 +45,7 @@
   justify-content: center;
   width: 100%;
   gap: 1rem;
-
+  
   min-height: 50px;
 }
 
@@ -61,6 +61,7 @@
 
   width: 100%;
   height: 100svh;
+  background-color: #1a8fe3;
 }
 
 .play-wrapper {
@@ -77,18 +78,20 @@
 }
 
 .play-heading {
-  font-family: "Slackey", "sans-serif";
+  font-family: "Poppins";
+  font-weight: bold;
   font-size: 1rem;
   text-align: center;
-
-  color: var(--secondary);
+  
+  color: white;
 }
 
 .play-score,
 .play-time {
-  font-family: "Slackey", "sans-serif";
+  font-family: "Poppins";
+  font-weight: bold;
   font-size: 1rem;
-  color: var(--secondary);
+  color: white;
 }
 
 .input-box,
@@ -101,11 +104,13 @@
   aspect-ratio: 1;
 
   cursor: pointer;
-  border: 1px solid var(--secondary);
+  border: 2px solid white;
   border-radius: 0.5rem;
 
   background-color: transparent;
   transition: transform 300ms ease-in-out;
+
+  text-transform: uppercase;
 }
 
 .choice-box:hover {
@@ -117,7 +122,7 @@
   font-size: 1rem;
   font-weight: 500;
 
-  background-color: var(--secondary);
+  background-color: #005b9c;
   color: var(--white);
 }
 
@@ -133,14 +138,16 @@
 .cta-button {
   font-size: 1rem;
   font-family: "Poppins";
-
+  font-weight: bold;
+  
   cursor: pointer;
+  background-color: #574e24;
 }
 
 .generic {
-  background-color: var(--primary);
-  color: var(--white);
-  border: 1px solid var(--primary);
+  background-color: #ff9900;
+  color: white;
+  border: 2px solid #f17105;
 
   padding: 0.5rem 1.5rem;
   border-radius: 0.5rem;
@@ -149,9 +156,9 @@
 }
 
 .generic:hover {
-  background-color: var(--white);
-  color: var(--primary);
-  border: 1px solid var(--primary);
+  background-color: #ffffff;
+  color: #ff9900;
+  border: 2px solid #ff9900;
 }
 
 .proceed {
