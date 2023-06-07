@@ -61,7 +61,7 @@
 
   width: 100%;
   height: 100svh;
-  background-color: #1a8fe3;
+  background-color: var(--primary);
 }
 
 .play-wrapper {
