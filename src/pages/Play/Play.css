@@ -45,7 +45,7 @@
   justify-content: center;
   width: 100%;
   gap: 1rem;
-  
+
   min-height: 50px;
 }
 
@@ -78,17 +78,17 @@
 }
 
 .play-heading {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
   font-size: 1rem;
   text-align: center;
-  
+
   color: white;
 }
 
 .play-score,
 .play-time {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
   font-size: 1rem;
   color: white;
@@ -118,7 +118,7 @@
 }
 
 .fill {
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-size: 1rem;
   font-weight: 500;
 
@@ -137,17 +137,17 @@
 
 .cta-button {
   font-size: 1rem;
-  font-family: "Poppins";
+  font-family: 'Poppins';
   font-weight: bold;
-  
+
   cursor: pointer;
   background-color: #574e24;
 }
 
 .generic {
-  background-color: #ff9900;
+  background-color: var(--tertiary);
   color: white;
-  border: 2px solid #f17105;
+  border: 2px solid var(--dark-orange);
 
   padding: 0.5rem 1.5rem;
   border-radius: 0.5rem;
@@ -156,9 +156,10 @@
 }
 
 .generic:hover {
-  background-color: #ffffff;
-  color: #ff9900;
-  border: 2px solid #ff9900;
+  background-color: var(--white);
+  color: var(--tertiary);
+
+  border: 2px solid var(--tertiary);
 }
 
 .proceed {
