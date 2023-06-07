@@ -1,25 +1,146 @@
+.play-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100svh;
+
+  gap: 2.5rem;
+  background-color: var(--white);
+}
+
+.play-heading {
+  font-family: "Slackey", "sans-serif";
+  font-size: 3rem;
+  text-align: center;
+
+  color: var(--secondary);
+}
+
 #words {
   display: flex;
-  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  width: 80%;
   gap: 1rem;
 }
 
-#input-boxes {
+#input-boxes,
+#input-choices {
   display: flex;
   justify-content: center;
   width: 100%;
   gap: 1rem;
+
+  min-height: 50px;
 }
 
-.input-box {
-  width: 40px;
+.input-box,
+.choice-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
   aspect-ratio: 1;
 
   cursor: pointer;
-  border: 1px solid black;
+  border: 1px solid var(--secondary);
+  border-radius: 0.5rem;
+
+  background-color: transparent;
+  transition: transform 300ms ease-in-out;
+}
+
+.choice-box:hover {
+  transform: translateY(-5px);
+}
+
+.fill {
+  font-family: "Poppins";
+  font-size: 1rem;
+  font-weight: 500;
+
+  background-color: var(--secondary);
+  color: var(--white);
+}
+
+.choice-box:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.choice-box:disabled:hover {
+  transform: translateY(0px);
+}
+
+#cta-buttons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.cta-button {
+  font-size: 1rem;
+  font-family: "Poppins";
+
+  cursor: pointer;
+}
+
+.generic {
+  background-color: var(--primary);
+  color: var(--white);
+  border: 1px solid var(--primary);
+
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+
+  transition: all 300ms ease-in-out;
+}
+
+.generic:hover {
+  background-color: var(--white);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.proceed {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+
+  background-color: var(--secondary);
+  color: var(--white);
+  border: 1px solid var(--secondary);
+
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+
+  transition: all 300ms ease-in-out;
+}
+
+.proceed:hover {
+  background-color: var(--white);
+  color: var(--secondary);
+  border: 1px solid var(--secondary);
 }
 
 .solved {
   font-weight: bold;
   color: green;
+
+  visibility: hidden;
+}
+
+.generic:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.generic:disabled:hover {
+  background-color: var(--primary);
+  color: var(--white);
+  border: 1px solid var(--primary);
 }

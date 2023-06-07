@@ -13,6 +13,8 @@ import "./Home.css";
 // } from "../../data";
 import { Link } from "react-router-dom";
 
+// import useAudio from "../../hooks/useAudio";
+
 function Home() {
   // == TODO: Remove this when the app is ready, only use this when we add data to db
   // const levelData = {
@@ -34,16 +36,28 @@ function Home() {
   // };
 
   const { getLevelData } = useContext(AppContext);
+  // const { playAudio } = useAudio("/audio/main-menu.mp3");
+
+  // useEffect(() => {
+  //   document.addEventListener("DOMContentLoaded", () => {
+  //     playAudio();
+  //   });
+
+  //   return () => {
+  //     document.removeEventListener("DOMContentLoaded", () => {
+  //       playAudio();
+  //     });
+  //   };
+  // });
 
   return (
-    <main>
-      <h1>Text Twist Game</h1>
-
-      <button>
+    <main className="home-page">
+      <section className="home-cta">
+        <h1 className="home-heading">Text Twist Game</h1>
         <Link to="/play" onClick={() => getLevelData()}>
-          Timed
+          <button className="play-button">Play</button>
         </Link>
-      </button>
+      </section>
     </main>
   );
 }

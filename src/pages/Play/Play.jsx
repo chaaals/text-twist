@@ -1,6 +1,9 @@
 import { useContext, useMemo, useState } from "react";
 import AppContext from "../../context/app.context";
 
+import Word from "../../components/Word";
+import Spinner from "../../components/Spinner";
+
 import "./Play.css";
 
 const Play = () => {
@@ -28,6 +31,8 @@ const Play = () => {
   }, [levelData]);
 
   const onChoiceSelect = (index) => {
+    if (!choices[index]) return;
+
     if (solvedWords.length === words.length) return;
 
     setInputBoxes((prev) => {
@@ -38,7 +43,7 @@ const Play = () => {
       return prevCopy;
     });
 
-    setChoices((prev) => prev.filter((_, i) => i !== index));
+    setChoices((prev) => [...prev.filter((_, i) => i !== index)]);
   };
 
   const onInputSelect = (index) => {
@@ -58,6 +63,7 @@ const Play = () => {
 
     const userInputs = inputBoxes.filter((el) => el !== undefined);
     setInputBoxes((prev) => prev.map(() => undefined));
+
     setChoices((prev) => [...prev, ...userInputs]);
   };
 
@@ -84,7 +90,11 @@ const Play = () => {
   };
 
   if (!levelData) {
-    return <h1>Loading...</h1>;
+    return (
+      <main className="play-page">
+        <Spinner />
+      </main>
+    );
   }
 
   const onTwist = () => {
@@ -92,17 +102,12 @@ const Play = () => {
   };
 
   return (
-    <main>
-      <h1>Current Level: {currentLevel}</h1>
+    <main className="play-page">
+      <h1 className="play-heading">Current Level: {currentLevel}</h1>
 
       <section id="words">
         {words.map((word) => (
-          <p
-            key={word}
-            className={`${solvedWords.includes(word) ? "solved" : ""}`}
-          >
-            {word}
-          </p>
+          <Word key={word} word={word} solved={solvedWords.includes(word)} />
         ))}
       </section>
 
@@ -110,7 +115,7 @@ const Play = () => {
         {inputBoxes.map((input, index) => (
           <div
             key={`${input}-${index}`}
-            className="input-box"
+            className={`input-box ${input ? "fill" : ""}`}
             onClick={() => onInputSelect(index)}
           >{`${input ?? ""}`}</div>
         ))}
@@ -119,8 +124,10 @@ const Play = () => {
       <section id="input-choices">
         {choices.map((letter, index) => (
           <button
+            className={`choice-box ${letter ? "fill" : ""}`}
             key={`${letter}-${index}`}
             onClick={() => onChoiceSelect(index)}
+            disabled={solvedWords.length === words.length}
           >
             {letter}
           </button>
@@ -128,13 +135,34 @@ const Play = () => {
       </section>
 
       <section id="cta-buttons">
-        <button onClick={onTwist}>Twist</button>
-        <button onClick={onClear}>Clear</button>
-        <button onClick={onUserEnter}>Enter</button>
-        {solvedWords.length === words.length && (
-          <button onClick={onProceed}>Proceed</button>
-        )}
+        <button
+          className="cta-button generic"
+          onClick={onTwist}
+          disabled={solvedWords.length === words.length}
+        >
+          Twist
+        </button>
+        <button
+          className="cta-button generic"
+          onClick={onClear}
+          disabled={solvedWords.length === words.length}
+        >
+          Clear
+        </button>
+        <button
+          className="cta-button generic"
+          onClick={onUserEnter}
+          disabled={solvedWords.length === words.length}
+        >
+          Enter
+        </button>
       </section>
+
+      {solvedWords.length === words.length && (
+        <button className="cta-button proceed" onClick={onProceed}>
+          Proceed
+        </button>
+      )}
     </main>
   );
 };
