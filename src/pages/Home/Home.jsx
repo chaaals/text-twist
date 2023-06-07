@@ -41,11 +41,9 @@ function Home() {
 
       <button>
         <Link to="/play" onClick={() => getLevelData()}>
-          Play
+          Timed
         </Link>
       </button>
-
-      {/* <button onClick={add}>Add Data</button> */}
     </main>
   );
 }
