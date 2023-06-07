@@ -6,6 +6,14 @@ import Spinner from "../../components/Spinner";
 
 import "./Play.css";
 
+const scores = {
+  2: 500,
+  3: 1500,
+  4: 2000,
+  5: 2500,
+  6: 4000,
+};
+
 const Play = () => {
   const {
     currentLevel,
@@ -13,10 +21,12 @@ const Play = () => {
     levelData,
     setLevelData,
     getLevelData,
+    time,
   } = useContext(AppContext);
   const [inputBoxes, setInputBoxes] = useState([]);
   const [choices, setChoices] = useState([]);
   const [solvedWords, setSolvedWords] = useState([]);
+  const [points, setPoints] = useState(0);
 
   const { words } = useMemo(() => {
     if (!levelData) return { words: undefined };
@@ -71,10 +81,15 @@ const Play = () => {
     const input = inputBoxes.join("");
     if (solvedWords.length === words.length) return;
 
-    if (solvedWords.includes(input)) return; //
+    if (solvedWords.includes(input)) {
+      onClear();
+      return;
+    }
 
     if (words && words.includes(input)) {
       setSolvedWords((prev) => [...prev, inputBoxes.join("")]);
+
+      setPoints((prev) => prev + scores[input.length]);
     } else {
       console.log("ngek");
     }
@@ -102,8 +117,10 @@ const Play = () => {
   };
 
   return (
-    <main className="play-page">
-      <h1 className="play-heading">Current Level: {currentLevel}</h1>
+    <main>
+      <h1>Current Level: {currentLevel}</h1>
+      <p>{points}</p>
+      <p>{time}</p>
 
       <section id="words">
         {words.map((word) => (
