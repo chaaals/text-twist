@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 import db from "../firebase/firebase-config";
 import { collection, getDocs } from "@firebase/firestore";
@@ -8,6 +8,8 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [currentLevel, setCurrentLevel] = useState(1);
   const [levelData, setLevelData] = useState(null);
+  const [time, setTime] = useState(3);
+  const [timer, setTimer] = useState(undefined);
 
   const getLevelData = async (currentLevel = 1) => {
     const levelCollectionRef = collection(db, `level-${currentLevel}`);
@@ -20,7 +22,20 @@ export const AppProvider = ({ children }) => {
         .filter((_, i) => i === index)
         .map((doc) => ({ ...doc.data(), id: doc.id }))
     );
+
+    setTimer(
+      setInterval(() => {
+        setTime((prev) => prev - 1);
+      }, 1000)
+    );
   };
+
+  useEffect(() => {
+    if (timer && time === 0) {
+      clearInterval(timer);
+      setTimer(undefined);
+    }
+  }, [time, timer]);
 
   return (
     <AppContext.Provider
@@ -30,6 +45,7 @@ export const AppProvider = ({ children }) => {
         levelData,
         setLevelData,
         getLevelData,
+        time,
       }}
     >
       {children}
