@@ -1,8 +1,9 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import AppContext from "../../context/app.context";
 
 import Word from "../../components/Word";
 import Spinner from "../../components/Spinner";
+import CorrectToast from "../../components/CorrectToast";
 
 import "./Play.css";
 
@@ -23,10 +24,14 @@ const Play = () => {
     getLevelData,
     time,
   } = useContext(AppContext);
+  const wordRefs = useRef([]);
   const [inputBoxes, setInputBoxes] = useState([]);
   const [choices, setChoices] = useState([]);
   const [solvedWords, setSolvedWords] = useState([]);
   const [points, setPoints] = useState(0);
+
+  const [correctToastIndex, setIsCorrectToastIndex] = useState(null);
+  const [isWrongInput, setIsWrongInput] = useState(false);
 
   const { words } = useMemo(() => {
     if (!levelData) return { words: undefined };
@@ -87,11 +92,26 @@ const Play = () => {
     }
 
     if (words && words.includes(input)) {
+      const index = words.findIndex((word) => word === input);
+      wordRefs.current[index].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+
       setSolvedWords((prev) => [...prev, inputBoxes.join("")]);
 
       setPoints((prev) => prev + scores[input.length]);
+
+      setIsCorrectToastIndex(Math.floor(Math.random() * 5) + 1);
+
+      setTimeout(() => setIsCorrectToastIndex(null), 2500);
     } else {
-      console.log("ngek");
+      setIsWrongInput(true);
+
+      setTimeout(() => {
+        setIsWrongInput(false);
+      }, 1000);
     }
 
     onClear();
@@ -116,19 +136,26 @@ const Play = () => {
     setChoices(shuffleArray(choices));
   };
 
-  console.log({words})
+  console.log({ words });
   return (
     <main className="play-page">
       <section className="play-wrapper">
         <section id="side-pannel">
-          <h1 className="play-heading">CURRENT LEVEL: {currentLevel}</h1>
-          <p className="play-score">SCORE: {points}</p>
-          <p className="play-time">TIME: {parseTime(time)}</p>
+          <h1 className="play-heading">CURRENT LEVEL : {currentLevel}</h1>
+          <p className="play-score">SCORE : {points}</p>
+          <p className="play-time">TIME : {parseTime(time)}</p>
         </section>
 
         <section id="words">
-          {words.map((word) => (
-            <Word key={word} word={word} solved={solvedWords.includes(word)} />
+          {words.map((word, index) => (
+            <Word
+              key={word}
+              word={word}
+              solved={solvedWords.includes(word)}
+              ref={(element) => {
+                wordRefs.current[index] = element;
+              }}
+            />
           ))}
         </section>
 
@@ -136,8 +163,12 @@ const Play = () => {
           {inputBoxes.map((input, index) => (
             <div
               key={`${input}-${index}`}
-              className={`input-box ${input ? "fill" : ""}`}
-              onClick={() => onInputSelect(index)}
+              className={`input-box ${input ? "fill" : ""} ${
+                isWrongInput ? "wrong-input" : ""
+              }`}
+              onClick={() => {
+                onInputSelect(index);
+              }}
             >{`${input ?? ""}`}</div>
           ))}
         </section>
@@ -185,6 +216,8 @@ const Play = () => {
           </button>
         )}
       </section>
+
+      {correctToastIndex && <CorrectToast index={correctToastIndex} />}
     </main>
   );
 };

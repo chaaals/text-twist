@@ -14,11 +14,13 @@
   font-weight: bold;
   color: var(--tertiary);
   background-color: rgb(236, 236, 236);
+
   width: 40px;
   aspect-ratio: 1;
   border: 1px solid #2222;
 
   border-radius: 0.5rem;
+  text-transform: uppercase;
 }
 
 .hide {
