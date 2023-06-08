@@ -147,7 +147,7 @@ const Play = () => {
     <main className="play-page">
       <section className="play-wrapper">
         <button className="volume-btn" onClick={toggleAudio}>
-          <FontAwesomeIcon icon={isPlaying ? faVolumeMute : faVolumeHigh} />
+          <FontAwesomeIcon icon={isPlaying ? faVolumeHigh : faVolumeMute} />
         </button>
         <section id="side-pannel">
           <h1 className="play-heading">CURRENT LEVEL : {currentLevel}</h1>

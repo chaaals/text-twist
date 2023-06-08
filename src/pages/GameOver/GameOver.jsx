@@ -36,7 +36,7 @@ const GameOver = () => {
     <main className="gameover-page">
       <section className="gameover-wrapper">
         <button className="volume-btn" onClick={toggleAudio}>
-          <FontAwesomeIcon icon={isPlaying ? faVolumeMute : faVolumeHigh} />
+          <FontAwesomeIcon icon={isPlaying ? faVolumeHigh : faVolumeMute} />
         </button>
 
         <h1 className="gameover-heading">Game Over</h1>
