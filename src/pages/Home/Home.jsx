@@ -39,7 +39,7 @@ function Home() {
       <section className="home-cta">
         <h1 className="home-heading">Text Twist Game</h1>
         <Link to="/play" onClick={() => getLevelData()}>
-          <button className="play-button">Play</button>
+          <button className="play-button">PLAY</button>
         </Link>
       </section>
     </main>

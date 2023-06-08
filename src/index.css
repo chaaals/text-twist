@@ -1,9 +1,11 @@
 :root {
-  --primary: #9747ff;
+  --primary: #1a8fe3;
   --secondary: #f1b236;
+  --tertiary: #ff9900;
 
   --white: white;
   --black: black;
+  --dark-orange: #f17105;
 }
 
 * {

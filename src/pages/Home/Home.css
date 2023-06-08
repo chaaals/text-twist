@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Slackey&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Rubik+Mono+One&display=swap');
 
 .home-page {
   display: flex;
@@ -23,24 +23,24 @@
 }
 
 .home-heading {
-  font-family: "Slackey", "sans-serif";
-  font-size: 2.5rem;
+  font-family: 'Rubik Mono One';
+  font-size: 4.75rem;
   text-align: center;
 
   color: var(--white);
 }
 
 .play-button {
-  font-family: "Poppins";
-  font-size: 1rem;
-  text-align: center;
+  font-family: 'Poppins';
+  font-weight: bold;
+  font-size: 1.5rem;
 
-  background-color: var(--primary);
+  background-color: var(--tertiary);
   color: var(--white);
 
-  padding: 0.5rem 2rem;
+  border: 2px solid var(--tertiary);
   border-radius: 0.5rem;
-  border: 1px solid var(--primary);
+  padding: 0.5rem 2rem;
 
   cursor: pointer;
   transition: all 300ms ease-in-out;
@@ -48,7 +48,9 @@
 
 .play-button:hover {
   background-color: var(--white);
-  color: var(--primary);
+  color: var(--tertiary);
+
+  border: 3.5px solid var(--tertiary);
 }
 
 .play-audio {
