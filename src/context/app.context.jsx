@@ -18,7 +18,8 @@ export const AppProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const { isPlaying, playAudio, pauseAudio } = useAudio("/audio/in-game.mp3");
+  const { isPlaying, playAudio, pauseAudio, toggleAudio } =
+    useAudio("/audio/in-game.mp3");
 
   const getLevelData = async (currentLevel = 1) => {
     const levelCollectionRef = collection(db, `level-${currentLevel}`);
@@ -70,8 +71,10 @@ export const AppProvider = ({ children }) => {
         points,
         setPoints,
 
+        isPlaying,
         playAudio,
         pauseAudio,
+        toggleAudio,
       }}
     >
       {children}

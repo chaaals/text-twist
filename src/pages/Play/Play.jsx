@@ -5,6 +5,9 @@ import Word from "../../components/Word";
 import Spinner from "../../components/Spinner";
 import CorrectToast from "../../components/CorrectToast";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVolumeHigh, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
+
 import "./Play.css";
 
 const scores = {
@@ -27,6 +30,8 @@ const Play = () => {
     setPoints,
     solvedWords,
     setSolvedWords,
+    isPlaying,
+    toggleAudio,
   } = useContext(AppContext);
   const wordRefs = useRef([]);
   const [inputBoxes, setInputBoxes] = useState([]);
@@ -141,6 +146,9 @@ const Play = () => {
   return (
     <main className="play-page">
       <section className="play-wrapper">
+        <button className="volume-btn" onClick={toggleAudio}>
+          <FontAwesomeIcon icon={isPlaying ? faVolumeMute : faVolumeHigh} />
+        </button>
         <section id="side-pannel">
           <h1 className="play-heading">CURRENT LEVEL : {currentLevel}</h1>
           <p className="play-score">SCORE : {points}</p>

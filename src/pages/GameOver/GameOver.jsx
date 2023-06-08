@@ -2,6 +2,9 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../context/app.context";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVolumeHigh, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
+
 import "./GameOver.css";
 
 const GameOver = () => {
@@ -14,6 +17,8 @@ const GameOver = () => {
     setLevelData,
     setSolvedWords,
     setPoints,
+    isPlaying,
+    toggleAudio,
   } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -30,6 +35,10 @@ const GameOver = () => {
   return (
     <main className="gameover-page">
       <section className="gameover-wrapper">
+        <button className="volume-btn" onClick={toggleAudio}>
+          <FontAwesomeIcon icon={isPlaying ? faVolumeMute : faVolumeHigh} />
+        </button>
+
         <h1 className="gameover-heading">Game Over</h1>
 
         <section className="gop-container">
