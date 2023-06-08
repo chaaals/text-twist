@@ -9,19 +9,21 @@
 
 #words {
   display: flex;
+  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 
   width: 100%;
   max-height: 350px;
-  gap: 2rem;
+  gap: 1.75rem;
 
-  padding: 1rem;
+  padding: 1.5rem;
   overflow: auto;
 }
 
 #words::-webkit-scrollbar {
-  width: 4px;
+  width: 0px;
+  height: 0px;
 }
 
 /* Track */
@@ -99,6 +101,7 @@
 
   width: 50px;
   aspect-ratio: 1;
+  text-transform: uppercase;
 
   cursor: pointer;
   border: 1px solid var(--secondary);

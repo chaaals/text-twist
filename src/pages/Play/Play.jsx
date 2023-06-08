@@ -116,6 +116,7 @@ const Play = () => {
     setChoices(shuffleArray(choices));
   };
 
+  console.log({words})
   return (
     <main className="play-page">
       <section className="play-wrapper">

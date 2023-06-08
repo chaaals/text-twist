@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 
 import db from "../firebase/firebase-config";
+import useAudio from "../hooks/useAudio";
 import { collection, getDocs } from "@firebase/firestore";
 
 const AppContext = createContext();
@@ -10,6 +11,8 @@ export const AppProvider = ({ children }) => {
   const [levelData, setLevelData] = useState(null);
   const [time, setTime] = useState(600);
   const [timer, setTimer] = useState(undefined);
+
+  const { isPlaying, playAudio } = useAudio("/audio/in-game.mp3");
 
   const getLevelData = async (currentLevel = 1) => {
     const levelCollectionRef = collection(db, `level-${currentLevel}`);
@@ -28,6 +31,10 @@ export const AppProvider = ({ children }) => {
           setTime((prev) => prev - 1);
         }, 1000)
       );
+    }
+
+    if (!isPlaying) {
+      playAudio();
     }
   };
 

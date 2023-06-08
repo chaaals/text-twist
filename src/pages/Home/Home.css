@@ -50,3 +50,9 @@
   background-color: var(--white);
   color: var(--primary);
 }
+
+.play-audio {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
