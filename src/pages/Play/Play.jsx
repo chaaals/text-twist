@@ -1,5 +1,9 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import AppContext from "../../context/app.context";
+
+import Word from "../../components/Word";
+import Spinner from "../../components/Spinner";
+import CorrectToast from "../../components/CorrectToast";
 
 import "./Play.css";
 
@@ -20,10 +24,14 @@ const Play = () => {
     getLevelData,
     time,
   } = useContext(AppContext);
+  const wordRefs = useRef([]);
   const [inputBoxes, setInputBoxes] = useState([]);
   const [choices, setChoices] = useState([]);
   const [solvedWords, setSolvedWords] = useState([]);
   const [points, setPoints] = useState(0);
+
+  const [correctToastIndex, setIsCorrectToastIndex] = useState(null);
+  const [isWrongInput, setIsWrongInput] = useState(false);
 
   const { words } = useMemo(() => {
     if (!levelData) return { words: undefined };
@@ -38,6 +46,8 @@ const Play = () => {
   }, [levelData]);
 
   const onChoiceSelect = (index) => {
+    if (!choices[index]) return;
+
     if (solvedWords.length === words.length) return;
 
     setInputBoxes((prev) => {
@@ -48,7 +58,7 @@ const Play = () => {
       return prevCopy;
     });
 
-    setChoices((prev) => prev.filter((_, i) => i !== index));
+    setChoices((prev) => [...prev.filter((_, i) => i !== index)]);
   };
 
   const onInputSelect = (index) => {
@@ -68,6 +78,7 @@ const Play = () => {
 
     const userInputs = inputBoxes.filter((el) => el !== undefined);
     setInputBoxes((prev) => prev.map(() => undefined));
+
     setChoices((prev) => [...prev, ...userInputs]);
   };
 
@@ -81,11 +92,26 @@ const Play = () => {
     }
 
     if (words && words.includes(input)) {
+      const index = words.findIndex((word) => word === input);
+      wordRefs.current[index].scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+
       setSolvedWords((prev) => [...prev, inputBoxes.join("")]);
 
       setPoints((prev) => prev + scores[input.length]);
+
+      setIsCorrectToastIndex(Math.floor(Math.random() * 5) + 1);
+
+      setTimeout(() => setIsCorrectToastIndex(null), 2500);
     } else {
-      console.log("ngek");
+      setIsWrongInput(true);
+
+      setTimeout(() => {
+        setIsWrongInput(false);
+      }, 1000);
     }
 
     onClear();
@@ -99,64 +125,113 @@ const Play = () => {
   };
 
   if (!levelData) {
-    return <h1>Loading...</h1>;
+    return (
+      <main className="play-page">
+        <Spinner />
+      </main>
+    );
   }
 
   const onTwist = () => {
     setChoices(shuffleArray(choices));
   };
 
+  console.log({ words });
   return (
-    <main>
-      <h1>Current Level: {currentLevel}</h1>
-      <p>{points}</p>
-      <p>{time}</p>
+    <main className="play-page">
+      <section className="play-wrapper">
+        <section id="side-pannel">
+          <h1 className="play-heading">CURRENT LEVEL : {currentLevel}</h1>
+          <p className="play-score">SCORE : {points}</p>
+          <p className="play-time">TIME : {parseTime(time)}</p>
+        </section>
 
-      <section id="words">
-        {words.map((word) => (
-          <p
-            key={word}
-            className={`${solvedWords.includes(word) ? "solved" : ""}`}
-          >
-            {word}
-          </p>
-        ))}
-      </section>
+        <section id="words">
+          {words.map((word, index) => (
+            <Word
+              key={word}
+              word={word}
+              solved={solvedWords.includes(word)}
+              ref={(element) => {
+                wordRefs.current[index] = element;
+              }}
+            />
+          ))}
+        </section>
 
-      <section id="input-boxes">
-        {inputBoxes.map((input, index) => (
-          <div
-            key={`${input}-${index}`}
-            className="input-box"
-            onClick={() => onInputSelect(index)}
-          >{`${input ?? ""}`}</div>
-        ))}
-      </section>
+        <section id="input-boxes">
+          {inputBoxes.map((input, index) => (
+            <div
+              key={`${input}-${index}`}
+              className={`input-box ${input ? "fill" : ""} ${
+                isWrongInput ? "wrong-input" : ""
+              }`}
+              onClick={() => {
+                onInputSelect(index);
+              }}
+            >{`${input ?? ""}`}</div>
+          ))}
+        </section>
 
-      <section id="input-choices">
-        {choices.map((letter, index) => (
+        <section id="input-choices">
+          {choices.map((letter, index) => (
+            <button
+              className={`choice-box ${letter ? "fill" : ""}`}
+              key={`${letter}-${index}`}
+              onClick={() => onChoiceSelect(index)}
+              disabled={solvedWords.length === words.length}
+            >
+              {letter}
+            </button>
+          ))}
+        </section>
+
+        <section id="cta-buttons">
           <button
-            key={`${letter}-${index}`}
-            onClick={() => onChoiceSelect(index)}
+            className="cta-button generic"
+            onClick={onTwist}
+            disabled={solvedWords.length === words.length}
           >
-            {letter}
+            TWIST
           </button>
-        ))}
-      </section>
+          <button
+            className="cta-button generic"
+            onClick={onClear}
+            disabled={solvedWords.length === words.length}
+          >
+            CLEAR
+          </button>
+          <button
+            className="cta-button generic"
+            onClick={onUserEnter}
+            disabled={solvedWords.length === words.length}
+          >
+            ENTER
+          </button>
+        </section>
 
-      <section id="cta-buttons">
-        <button onClick={onTwist}>Twist</button>
-        <button onClick={onClear}>Clear</button>
-        <button onClick={onUserEnter}>Enter</button>
         {solvedWords.length === words.length && (
-          <button onClick={onProceed}>Proceed</button>
+          <button className="cta-button proceed" onClick={onProceed}>
+            Proceed
+          </button>
         )}
       </section>
+
+      {correctToastIndex && <CorrectToast index={correctToastIndex} />}
     </main>
   );
 };
 
 export default Play;
+
+function parseTime(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+
+  return `${minutes < 10 ? `0${minutes}` : minutes} : ${
+    seconds < 10 ? `0${seconds}` : seconds
+  }`;
+}
 
 function shuffleArray(array) {
   let copy = [...array];

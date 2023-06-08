@@ -32,20 +32,16 @@ function Home() {
   //     }
   //   }
   // };
-
   const { getLevelData } = useContext(AppContext);
 
   return (
-    <main>
-      <h1>Text Twist Game</h1>
-
-      <button>
+    <main className="home-page">
+      <section className="home-cta">
+        <h1 className="home-heading">Text Twist Game</h1>
         <Link to="/play" onClick={() => getLevelData()}>
-          Play
+          <button className="play-button">PLAY</button>
         </Link>
-      </button>
-
-      {/* <button onClick={add}>Add Data</button> */}
+      </section>
     </main>
   );
 }

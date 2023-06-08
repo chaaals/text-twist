@@ -1,0 +1,32 @@
+.word-wrapper {
+  display: flex;
+  width: fit-content;
+  gap: 0.5rem;
+}
+
+.letter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1rem;
+  font-family: "Poppins";
+  font-weight: bold;
+  color: var(--tertiary);
+  background-color: rgb(236, 236, 236);
+
+  width: 40px;
+  aspect-ratio: 1;
+  border: 1px solid #2222;
+
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.show {
+  visibility: visible;
+}
