@@ -23,12 +23,14 @@ const Play = () => {
     setLevelData,
     getLevelData,
     time,
+    points,
+    setPoints,
+    solvedWords,
+    setSolvedWords,
   } = useContext(AppContext);
   const wordRefs = useRef([]);
   const [inputBoxes, setInputBoxes] = useState([]);
   const [choices, setChoices] = useState([]);
-  const [solvedWords, setSolvedWords] = useState([]);
-  const [points, setPoints] = useState(0);
 
   const [correctToastIndex, setIsCorrectToastIndex] = useState(null);
   const [isWrongInput, setIsWrongInput] = useState(false);
@@ -136,7 +138,6 @@ const Play = () => {
     setChoices(shuffleArray(choices));
   };
 
-  console.log({ words });
   return (
     <main className="play-page">
       <section className="play-wrapper">

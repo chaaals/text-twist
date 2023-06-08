@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import db from "../firebase/firebase-config";
 import useAudio from "../hooks/useAudio";
@@ -12,7 +13,12 @@ export const AppProvider = ({ children }) => {
   const [time, setTime] = useState(600);
   const [timer, setTimer] = useState(undefined);
 
-  const { isPlaying, playAudio } = useAudio("/audio/in-game.mp3");
+  const [solvedWords, setSolvedWords] = useState([]);
+  const [points, setPoints] = useState(0);
+
+  const navigate = useNavigate();
+
+  const { isPlaying, playAudio, pauseAudio } = useAudio("/audio/in-game.mp3");
 
   const getLevelData = async (currentLevel = 1) => {
     const levelCollectionRef = collection(db, `level-${currentLevel}`);
@@ -42,8 +48,9 @@ export const AppProvider = ({ children }) => {
     if (timer && time === 0) {
       clearInterval(timer);
       setTimer(undefined);
+      navigate("/game-over", { replace: true });
     }
-  }, [time, timer]);
+  }, [time, timer, navigate, pauseAudio]);
 
   return (
     <AppContext.Provider
@@ -53,7 +60,18 @@ export const AppProvider = ({ children }) => {
         levelData,
         setLevelData,
         getLevelData,
+
         time,
+        setTime,
+
+        solvedWords,
+        setSolvedWords,
+
+        points,
+        setPoints,
+
+        playAudio,
+        pauseAudio,
       }}
     >
       {children}
