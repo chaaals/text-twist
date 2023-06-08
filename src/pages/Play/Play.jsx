@@ -5,6 +5,9 @@ import Word from "../../components/Word";
 import Spinner from "../../components/Spinner";
 import CorrectToast from "../../components/CorrectToast";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVolumeHigh, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
+
 import "./Play.css";
 
 const scores = {
@@ -23,12 +26,16 @@ const Play = () => {
     setLevelData,
     getLevelData,
     time,
+    points,
+    setPoints,
+    solvedWords,
+    setSolvedWords,
+    isPlaying,
+    toggleAudio,
   } = useContext(AppContext);
   const wordRefs = useRef([]);
   const [inputBoxes, setInputBoxes] = useState([]);
   const [choices, setChoices] = useState([]);
-  const [solvedWords, setSolvedWords] = useState([]);
-  const [points, setPoints] = useState(0);
 
   const [correctToastIndex, setIsCorrectToastIndex] = useState(null);
   const [isWrongInput, setIsWrongInput] = useState(false);
@@ -136,10 +143,12 @@ const Play = () => {
     setChoices(shuffleArray(choices));
   };
 
-  console.log({ words });
   return (
     <main className="play-page">
       <section className="play-wrapper">
+        <button className="volume-btn" onClick={toggleAudio}>
+          <FontAwesomeIcon icon={isPlaying ? faVolumeMute : faVolumeHigh} />
+        </button>
         <section id="side-pannel">
           <h1 className="play-heading">CURRENT LEVEL : {currentLevel}</h1>
           <p className="play-score">SCORE : {points}</p>

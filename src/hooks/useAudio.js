@@ -14,7 +14,17 @@ const useAudio = (url) => {
     setIsPlaying(false);
   };
 
-  return { isPlaying, playAudio, pauseAudio };
+  const toggleAudio = () => {
+    if (isPlaying) {
+      pauseAudio();
+      setIsPlaying(false);
+      return;
+    }
+
+    playAudio();
+    setIsPlaying(true);
+  };
+  return { isPlaying, playAudio, pauseAudio, toggleAudio };
 };
 
 export default useAudio;
