@@ -18,6 +18,14 @@ const scores = {
   6: 4000,
 };
 
+const limit = {
+  1: 5,
+  2: 10,
+  3: 10,
+  4: 15,
+  5: 20,
+};
+
 const Play = () => {
   const {
     currentLevel,
@@ -33,6 +41,7 @@ const Play = () => {
     isPlaying,
     toggleAudio,
   } = useContext(AppContext);
+
   const wordRefs = useRef([]);
   const [inputBoxes, setInputBoxes] = useState([]);
   const [choices, setChoices] = useState([]);
@@ -46,11 +55,15 @@ const Play = () => {
     const [data] = levelData;
     const { words, letters } = data;
 
+    const __words = generateRandomArray(words, limit[currentLevel]).map(
+      (index) => words[index]
+    );
+
     setInputBoxes(Array.from({ length: letters.length }));
     setChoices(letters);
 
-    return { words: words.sort((a, b) => a.length - b.length) };
-  }, [levelData]);
+    return { words: __words.sort((a, b) => a.length - b.length) };
+  }, [levelData, currentLevel]);
 
   const onChoiceSelect = (index) => {
     if (!choices[index]) return;
@@ -240,6 +253,24 @@ function parseTime(time) {
   return `${minutes < 10 ? `0${minutes}` : minutes} : ${
     seconds < 10 ? `0${seconds}` : seconds
   }`;
+}
+
+function generateRandomArray(arr, limit) {
+  if (arr.length < limit) return arr;
+
+  let output = [];
+  let i = 0;
+
+  while (output.length !== limit) {
+    const randomIndex = Math.floor(Math.random() * arr.length);
+
+    if (!output.includes(randomIndex)) {
+      output[i] = randomIndex;
+      i++;
+    }
+  }
+
+  return output;
 }
 
 function shuffleArray(array) {
